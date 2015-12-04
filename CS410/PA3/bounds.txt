@@ -1,0 +1,35 @@
+Airplane - 
+Number of vertices in the model are 1335
+Number of faces in the model are 2452
+Mean vertex (x, y, z) is (896.995, 727.077, 83.0924)
+Minimum bounds (x, y, z) are (0, 0, -17.7412)
+Maximum bounds (x, y, z) are (1654.93, 1319.95, 282.13)
+
+Dolphins - 
+Number of vertices in the model are 855
+Number of faces in the model are 1689
+Mean vertex (x, y, z) is (-76.6884, -1.11541e-07, 133.751)
+Minimum bounds (x, y, z) are (-477.202, -86.61, -180.377)
+Maximum bounds (x, y, z) are (349.473, 86.61, 566.654)
+
+Scaled teapot - 
+Number of vertices in the model are 1177
+Number of faces in the model are 2256
+Mean vertex (x, y, z) is (4.42173, 0.0379445, 173.935)
+Minimum bounds (x, y, z) are (-300, -200, 0)
+Maximum bounds (x, y, z) are (342.963, 200, 315)
+
+Scaled beethoven
+Number of vertices in the model are 2521
+Number of faces in the model are 5030
+Mean vertex (x, y, z) is (-1.44901e-05, -56.6736, 98.863)
+Minimum bounds (x, y, z) are (-464.855, -603.088, -331.909)
+Maximum bounds (x, y, z) are (464.855, 554.417, 334.742)
+
+Scaled turbine 
+Number of vertices in the model are 3309
+Number of faces in the model are 6618
+Mean vertex (x, y, z) is (99.8121, 99.2412, 73.922)
+Minimum bounds (x, y, z) are (0, 0, 0)
+Maximum bounds (x, y, z) are (191.152, 191.152, 98.5166)
+

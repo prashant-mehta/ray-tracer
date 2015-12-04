@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;PA1/test/ParsePlyAttributes_test.cpp&apos; to &apos;ParsePlyAttributesTest.cpp&apos;" description="Rename resource &apos;ParsePlyAttributes_test.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="test/ParsePlyAttributes_test.cpp" name="ParsePlyAttributesTest.cpp" stamp="1442705683140" updateReferences="true"/>
+</session>

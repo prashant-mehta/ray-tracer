@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;PA1/test/WritePly_test.cpp&apos; to &apos;WritePlyTest.cpp&apos;" description="Rename resource &apos;WritePly_test.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="test/WritePly_test.cpp" name="WritePlyTest.cpp" stamp="1442735554833" updateReferences="true"/>
+</session>

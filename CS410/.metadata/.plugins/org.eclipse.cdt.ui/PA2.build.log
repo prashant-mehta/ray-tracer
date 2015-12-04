@@ -1,0 +1,19 @@
+03:21:10 **** Incremental Build of configuration Debug for project PA2 ****
+make all 
+Building file: ../src/Silhouette.cpp
+Invoking: GCC C++ Compiler
+g++ -I"/home/prashantm/repo/CS410/PA2/include" -O3 -g3 -c -fmessage-length=0 -Wsign-compare -MMD -MP -MF"src/Silhouette.d" -MT"src/Silhouette.d" -o "src/Silhouette.o" "../src/Silhouette.cpp"
+../src/Silhouette.cpp: In member function 'void Silhouette::SilhouetteForModel(const char*)':
+../src/Silhouette.cpp:255:25: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for (int k = 0; k < num_triangles; k++) {
+                         ^
+Finished building: ../src/Silhouette.cpp
+ 
+Building target: PA2
+Invoking: GCC C++ Linker
+g++  -o "PA2"  ./test/AllTests.o  ./src/CreateTriangles.o ./src/Face.o ./src/Foo.o ./src/MatrixOperations.o ./src/ParseCameraModel.o ./src/ParsePly.o ./src/ParsePlyAttributes.o ./src/Pixel.o ./src/ProjectionMatrix.o ./src/Silhouette.o ./src/SphereIntersection.o ./src/Transformation.o ./src/TransformationMatrices.o ./src/VectorOperations.o ./src/Vertex.o ./src/WritePly.o ./src/WritePpm.o  ./external/gtest/gtest-all.o   -lpthread
+Finished building target: PA2
+ 
+
+03:21:12 Build Finished (took 1s.518ms)
+

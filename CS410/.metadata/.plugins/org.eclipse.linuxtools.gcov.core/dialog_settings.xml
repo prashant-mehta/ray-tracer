@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="viewer_state_section">
+		<item value="0" key="horizontal_position"/>
+		<item value="1520" key="vertical_position"/>
+		<list key="column_order">
+			<item value="0"/>
+			<item value="1"/>
+			<item value="2"/>
+			<item value="3"/>
+			<item value="4"/>
+		</list>
+		<section name="hide_show_section">
+			<item value="1" key="column_state_3"/>
+			<item value="1" key="column_state_4"/>
+			<item value="145" key="column_width_2"/>
+			<item value="100" key="column_width_3"/>
+			<item value="1" key="column_state_0"/>
+			<item value="1108" key="column_width_4"/>
+			<item value="1" key="column_state_1"/>
+			<item value="1" key="column_state_2"/>
+			<item value="100" key="column_width_1"/>
+			<item value="597" key="column_width_0"/>
+		</section>
+		<section name="sorter_section">
+			<item value="2" key="sort_priority_3"/>
+			<item value="1" key="sort_direction_1"/>
+			<item value="1" key="sort_direction_2"/>
+			<item value="1" key="sort_priority_2"/>
+			<item value="1" key="sort_direction_3"/>
+			<item value="1" key="sort_direction_4"/>
+			<item value="3" key="sort_priority_4"/>
+			<item value="0" key="sort_priority_1"/>
+			<item value="1" key="sort_direction_0"/>
+			<item value="4" key="sort_priority_0"/>
+		</section>
+		<section name="csv_exporter_section">
+			<item value="+-" key="csv_exporter_child_marker"/>
+			<item value="+-" key="csv_exporter_last_child_marker"/>
+			<item value="" key="csv_exporter_leaf_marker"/>
+			<item value="false" key="csv_exporter_expand_all"/>
+			<item value="false" key="csv_exporter_tree_prefix"/>
+			<item value="true" key="csv_exporter_show_hidden_columns"/>
+			<item value="| " key="csv_exporter_child_link"/>
+			<item value="" key="csv_exporter_node_marker"/>
+			<item value="  " key="csv_exporter_no_child_link"/>
+			<item value=";" key="csv_exporter_separator"/>
+			<item value="gcov.csv" key="csv_exporter_output_file_path"/>
+		</section>
+		<section name="charts_section">
+			<item value="true" key="COLUMN_BUTTON_1"/>
+			<item value="true" key="COLUMN_BUTTON_0"/>
+			<item value="true" key="COLUMN_BUTTON_2"/>
+			<item value="true" key="VERTICAL_BARS_BUTTON"/>
+			<item value="true" key="BAR_GRAPH_BUTTON"/>
+		</section>
+	</section>
+</section>
