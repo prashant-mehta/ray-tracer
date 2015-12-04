@@ -46,6 +46,7 @@ CreateTriangles::CreateTriangles(const vector<Face>& inputfaces) {
 			triangle_to_add.setDiffuseReflectance(k[0], k[1], k[2]);
 			triangle_to_add.setSpecularReflectance(inputfaces.at(i).getSpecularReflectance());
 			triangle_to_add.setShininessExponent(inputfaces.at(i).getShininessExponent());
+			triangle_to_add.setTranslucency(inputfaces.at(i).getTranslucency());
 
 			triangles.push_back(triangle_to_add);
 

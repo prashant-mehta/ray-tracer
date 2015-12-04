@@ -17,7 +17,7 @@ CC_DEPS += \
 external/gtest/%.o: ../external/gtest/%.cc
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -std=c++0x -I"/home/prashantm/repo/CS410/PA4/external" -O3 -g3 -ftest-coverage -fprofile-arcs -c -fmessage-length=0 -Wsign-compare -std=c++11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -std=c++0x -I"/home/prashantm/ray-tracer/CS410/PA4/external" -O3 -g3 -ftest-coverage -fprofile-arcs -c -fmessage-length=0 -Wsign-compare -std=c++11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

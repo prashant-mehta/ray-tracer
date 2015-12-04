@@ -104,7 +104,7 @@ void ParseMaterials::ParseMaterialProperties(string line_to_parse, vector<Face>&
 
 	uint32_t first_polygon, last_polygon;
 
-	float kr, kg, kb, ks, alpha;
+	float kr, kg, kb, ks, alpha, kt;
 
 	// Skip 'M'
 	next_pos = line_to_parse.find(" ", last_pos);
@@ -146,8 +146,13 @@ void ParseMaterials::ParseMaterialProperties(string line_to_parse, vector<Face>&
 		ks = strtof(line_to_parse.substr(last_pos,  next_pos - last_pos).c_str(), &pEnd);
 		last_pos = next_pos + 1;
 
-		// Get shininess exponenet
-		alpha = strtof(line_to_parse.substr(last_pos, line_to_parse.size()).c_str(), &pEnd);
+		// Get shininess exponent
+		next_pos = line_to_parse.find(" ", last_pos);
+		alpha = strtof(line_to_parse.substr(last_pos,  next_pos - last_pos).c_str(), &pEnd);
+		last_pos = next_pos + 1;
+
+		// Get translucency
+		kt = strtof(line_to_parse.substr(last_pos, line_to_parse.size()).c_str(), &pEnd);
 
 	//	cout << "ks, alpha is " << ks << " " << alpha << endl;
 
@@ -161,6 +166,8 @@ void ParseMaterials::ParseMaterialProperties(string line_to_parse, vector<Face>&
 		faces.at(i).setSpecularReflectance(ks);
 
 		faces.at(i).setShininessExponent(alpha);
+
+		faces.at(i).setTranslucency(kt);
 	}
 
 //	cout << "Bounds " << first_polygon << " " << last_polygon << endl;

@@ -15,6 +15,7 @@ private:
 	float *diffuse_reflectance; // 3 terms of Lambertian reflectance matrix
 	float specular_reflectance; // k
 	float shininess_exponent; // alpha
+	float translucency;
 
 public:
 	FaceProperties(void);
@@ -28,10 +29,17 @@ public:
 		return shininess_exponent;
 	}
 
+
+	float getTranslucency(void) const {
+		return translucency;
+	}
+
 	void setDiffuseReflectance(float kr, float kg, float kb);
 
 	void setSpecularReflectance(float ks);
 	void setShininessExponent(float alpha);
+
+	void setTranslucency(float kt);
 
 
 };

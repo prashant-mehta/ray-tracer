@@ -185,8 +185,7 @@ void Casting::CastingForModel(void) {
 	Vertex *RayPolygonToFP;
 
 
-	for (int model_index = 0; model_index < this->number_of_models;
-			model_index++) {
+	for (int model_index = 0; model_index < this->number_of_models;	model_index++) {
 
 		Vertex L;
 
@@ -420,16 +419,20 @@ void Casting::FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current
 
 		t = solution[2];
 
-		if (((solution[0] > -EPSILON) && (solution[1] > -EPSILON) && (solution[0] + solution[1] < 1 )
-				&& (t > -EPSILON)) && (t < current_pixel->distance_closest_intersection) ) {
+		if (((solution[0] > -EPSILON) && (solution[1] > -EPSILON) && (solution[0] + solution[1] - 1 < EPSILON )
+				&& (t > EPSILON)) && (t - current_pixel->distance_closest_intersection < EPSILON) ) {
 /*
-			if (k == 719) {
+			if (current_triangle == 719) {
 				cout << "Solution 0 " << solution[0] << endl;
 				cout << "Solution 1 " << solution[1] << endl;
 				cout << "Solution 0+1 " << solution[0]+solution[1] << endl;
+				cout << "t " << t << endl;
+
 			}
 */
 			// t < all other intersections
+
+
 			current_pixel->distance_closest_intersection = t;
 			current_pixel->closest_polygon = k;
 
@@ -520,7 +523,7 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 
 			ray_shadowed = false;
 
-			if (NdotL < -EPSILON/* || VdotR < -EPSILON*/) {
+			if (NdotL < EPSILON/* || VdotR < -EPSILON*/) {
 
 				ray_shadowed = true;
 				delete LightRay;
@@ -605,7 +608,7 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 
 			//cout << "RvdotSurfaceNormal " << this->vector_operations->DotProduct(InvRv, SurfaceNormal)<< endl;
 		//	if (kmin == 88)
-			cout << "kmin is " << kmin << " closest polygon to it " << recursive_color.closest_polygon << endl;
+			//cout << "kmin is " << kmin << " closest polygon to it " << recursive_color.closest_polygon << endl;
 
 			number_of_recursive_calls++;
 
@@ -619,7 +622,7 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 
 			}
 
-						if (kmin == 716){
+			/*			if (kmin == 719){
 			cout << "VdotN " << VdotN << endl;
 
 			cout << "POI of polygon - " << kmin;
@@ -639,7 +642,7 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 			all_triangles.at(recursive_color.closest_polygon).getVertexFromFace(2).PrintVertex();
 						}
 
-
+*/
 
 
 
@@ -801,7 +804,7 @@ bool Casting::RaySphereIntersection(Vertex *L) {
 
 	dSquare = radiusSquare - cSquare + vSquare;
 
-	if (dSquare < -EPSILON || (radiusSquare < (cSquare - vSquare))) {
+	if (dSquare < EPSILON ) {
 		// cout << "dSqaure negative" << endl;
 		// continue;
 		return false;
@@ -841,7 +844,7 @@ bool Casting::RayTriangleIntersection(Face triangle, Vertex ray, Vertex point, f
 	float gamma = solution[0];
 
 
-	if ((beta > -EPSILON) && (gamma > -EPSILON) && (beta + gamma < 1 ) && (t > EPSILON) && (t < distance)) {
+	if ((beta > -EPSILON) && (gamma > -EPSILON) && ( (beta + gamma - 1) < EPSILON ) && (t > EPSILON) && (t - distance < EPSILON)) {
 		// Light ray intersects polygon
 		delete solution;
 		return true;

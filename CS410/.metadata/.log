@@ -1821,3 +1821,13 @@ java.net.UnknownHostException: dev.eclipse.org: Name or service not known
 
 !ENTRY org.eclipse.epp.logging.aeri.ui 2 6 2015-12-01 08:06:42.735
 !MESSAGE Failed to determine ETAG for remote problems database. Stopping update. Version: 1.0.0.v20150617-0732
+!SESSION 2015-12-03 22:02:59.205 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.7.0_85
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2015-12-03 22:03:26.745
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.

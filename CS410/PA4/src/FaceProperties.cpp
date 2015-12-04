@@ -14,6 +14,7 @@ FaceProperties::FaceProperties(void) {
 	diffuse_reflectance[0]=diffuse_reflectance[1]=diffuse_reflectance[2]=0.5;
 	specular_reflectance = 0.0;
 	shininess_exponent = 1;
+	translucency = 0.0;
 
 }
 
@@ -30,4 +31,8 @@ void FaceProperties::setSpecularReflectance(float ks) {
 
 void FaceProperties::setShininessExponent(float alpha) {
 	shininess_exponent = alpha;
+}
+
+void FaceProperties::setTranslucency(float kt) {
+	translucency = kt;
 }

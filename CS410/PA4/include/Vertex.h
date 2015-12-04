@@ -15,7 +15,7 @@
 #include <cfloat>
 using namespace std;
 
-#define EPSILON 0.0000001 // Previously 10^-6
+#define EPSILON 0.000000001 // Previously 10^-6
 
 class Vertex {
 public:
