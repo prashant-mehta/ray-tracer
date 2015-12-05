@@ -25,6 +25,7 @@
 using namespace std;
 class MatrixOperations {
 public:
+
 	MatrixOperations();
 
 	void MatrixMultiply(float operand_one[4][4], float operand_two[4][4], float result[4][4]);

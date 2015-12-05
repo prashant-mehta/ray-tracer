@@ -13,6 +13,7 @@ MatrixOperations::MatrixOperations() {
 	// TODO Auto-generated constructor stub
 	deteminant_zero = false;
 
+
 }
 
 float MatrixOperations::Determinant(float *matrix) {
@@ -22,6 +23,8 @@ float MatrixOperations::Determinant(float *matrix) {
 
 	result = matrix[0]*(matrix[4]*matrix[8] - matrix[5]*matrix[7]) - matrix[1]*(matrix[3]*matrix[8] - matrix[5]*matrix[6])
 			+ matrix[2]*(matrix[3]*matrix[7] - matrix[4]*matrix[6]);
+
+
 
 	if (fabs(result) < EPSILON ) deteminant_zero = true;
 

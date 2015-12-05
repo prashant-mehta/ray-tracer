@@ -74,8 +74,8 @@ Casting::Casting(int argc, char **argv) {
 	fpPlusdn.z_coordinate = this->focal_point->z_coordinate
 			+ (this->focal_length * this->nVec->z_coordinate);
 
-	min_color = 0;
-	max_color = 1;
+	min_color = 1;
+	max_color = 0;
 
 	/*	// Generate Silhouette for each model
 	 for (int model_index = 0; model_index < this->number_of_models; model_index++) {
@@ -93,11 +93,9 @@ Casting::Casting(int argc, char **argv) {
 	for (int a = vMin; a <= vMax; a++) {
 		for (int b = uMin; b <= uMax; b++) {
 
-			for (int i = 0; i < anti_aliasing_pixels; i++) {
-
-				rV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).rValue;
-				gV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).gValue;
-				bV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).bValue;
+				rV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).rValue;
+				gV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).gValue;
+				bV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).bValue;
 
 				// To make sure colors are not greater than 1 or less than 0
 				rV = std::min(rV, (float) 1.0);
@@ -114,19 +112,19 @@ Casting::Casting(int argc, char **argv) {
 				min_color = min(minV, min_color);
 				max_color = max(maxV, max_color);
 
-			}
 		}
 	}
+
+
 
 	// Scale all pixels to min and max before writing out
 	// For every pixel
 	for (int a = vMin; a <= vMax; a++) {
 		for (int b = uMin; b <= uMax; b++) {
 
-			for (int i = 0; i < anti_aliasing_pixels; i++) {
-				pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).SetScaledPixels(max_color, min_color);
+				pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).SetScaledPixels(max_color, min_color);
 
-			}
+
 		}
 	}
 
@@ -404,8 +402,10 @@ void Casting::FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current
 		B = all_triangles.at(k).getVertexFromFace(1);
 		C = all_triangles.at(k).getVertexFromFace(2);
 		// cout << "going into solve intersection" << endl;
+
 		solution = this->vector_operations->SolveForIntersection(L,
 				A, B, C, *RayFPToPolygon);
+
 		// cout << "out of solve intersection" << endl;
 
 
@@ -418,16 +418,18 @@ void Casting::FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current
 		t = solution[2];
 
 		if (((solution[0] > -EPSILON) && (solution[1] > -EPSILON) && (solution[0] + solution[1] - 1 < EPSILON )
-				&& (t > EPSILON)) && (t - current_pixel->distance_closest_intersection < EPSILON) ) {
-			/*
-			if (current_triangle == 719) {
+				&& (t > 0.001)) && (t - current_pixel->distance_closest_intersection < EPSILON) ) {
+/*
+			if (k == 599) {
+
+
 				cout << "Solution 0 " << solution[0] << endl;
 				cout << "Solution 1 " << solution[1] << endl;
 				cout << "Solution 0+1 " << solution[0]+solution[1] << endl;
 				cout << "t " << t << endl;
 
 			}
-			 */
+*/
 			// t < all other intersections
 
 
@@ -487,12 +489,22 @@ cout << "test1" << endl;
 	// Compute Point of intersection using t
 	PointOfIntersection = ComputePointOfIntersection(L, tmin, *RayFPToPolygon);
 
+/*
 
+	if (kmin == 571 && recursion_level == 1) {
+		cout << "POI for kmin - 571 is " ;
+		PointOfIntersection->PrintVertex();
+	}
 
-
-
+*/
 	SurfaceNormal = ComputeSurfaceNormal(A, B, C,&RayPolygonToFP);
 
+/*
+	if (kmin == 599) {
+		cout << "NdotL" << this->vector_operations->DotProduct(&RayPolygonToFP, SurfaceNormal) << endl;
+
+	}
+*/
 	// Calculate color -- Main part of ray casting
 	// For each source of light (except ambient source)
 	for (int curr_light = 0; curr_light	< this->parse_materials->light_sources.size(); curr_light++) {
@@ -520,6 +532,8 @@ cout << "test1" << endl;
 
 
 			ray_shadowed = false;
+
+
 
 			if (NdotL < EPSILON/* || VdotR < -EPSILON*/) {
 
@@ -608,7 +622,7 @@ cout << "test1" << endl;
 
 		if (recursive_color.closest_polygon != UINT64_MAX && recursive_color.distance_closest_intersection != FLT_MAX) {
 
-			//cout << "RvdotSurfaceNormal " << this->vector_operations->DotProduct(InvRv, SurfaceNormal)<< endl;
+
 			//	if (kmin == 88)
 			//cout << "kmin is " << kmin << " closest polygon to it " << recursive_color.closest_polygon << endl;
 
@@ -624,12 +638,12 @@ cout << "test1" << endl;
 
 			}
 
-			/*			if (kmin == 719){
+		/*				if (kmin == 539 | kmin == 599){
 			cout << "VdotN " << VdotN << endl;
 
 			cout << "POI of polygon - " << kmin;
 			PointOfIntersection->PrintVertex();
-
+			cout << "RvdotSurfaceNormal " << this->vector_operations->DotProduct(InvRv, SurfaceNormal)<< endl;
 
 			cout << "Vertices of kmin polygon are " << endl;
 			all_triangles.at(kmin).getVertexFromFace(0).PrintVertex();
@@ -644,7 +658,7 @@ cout << "test1" << endl;
 			all_triangles.at(recursive_color.closest_polygon).getVertexFromFace(2).PrintVertex();
 						}
 
-			 */
+*/
 
 
 
@@ -917,20 +931,20 @@ Vertex * Casting::ComputeSurfaceNormal(Vertex A, Vertex B, Vertex C,
 
 	Vertex * Ntemp;
 	Vertex *BminusA;
-	Vertex *CminusB;
-	Vertex BminusAtemp, CminusBtemp;
+	Vertex *CminusA;
+	Vertex BminusAtemp, CminusAtemp;
 	BminusAtemp.x_coordinate = B.x_coordinate - A.x_coordinate;
 	BminusAtemp.y_coordinate = B.y_coordinate - A.y_coordinate;
 	BminusAtemp.z_coordinate = B.z_coordinate - A.z_coordinate;
 
-	CminusBtemp.x_coordinate = C.x_coordinate - B.x_coordinate;
-	CminusBtemp.y_coordinate = C.y_coordinate - B.y_coordinate;
-	CminusBtemp.z_coordinate = C.z_coordinate - B.z_coordinate;
+	CminusAtemp.x_coordinate = C.x_coordinate - A.x_coordinate;
+	CminusAtemp.y_coordinate = C.y_coordinate - A.y_coordinate;
+	CminusAtemp.z_coordinate = C.z_coordinate - A.z_coordinate;
 
 	BminusA = this->vector_operations->Normalize(&BminusAtemp);
-	CminusB = this->vector_operations->Normalize(&CminusBtemp);
+	CminusA = this->vector_operations->Normalize(&CminusAtemp);
 
-	Ntemp = this->vector_operations->CrossProduct(BminusA, CminusB);
+	Ntemp = this->vector_operations->CrossProduct(BminusA, CminusA);
 
 	N = this->vector_operations->Normalize(Ntemp);
 
@@ -942,7 +956,7 @@ Vertex * Casting::ComputeSurfaceNormal(Vertex A, Vertex B, Vertex C,
 	}
 
 	delete BminusA;
-	delete CminusB;
+	delete CminusA;
 	delete Ntemp;
 
 	return N;

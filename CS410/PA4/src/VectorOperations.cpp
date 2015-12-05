@@ -17,7 +17,7 @@ VectorOperations::VectorOperations() {
 float VectorOperations::Magnitude(Vertex *v){
 
 
-	return sqrt(v->x_coordinate*v->x_coordinate + v->y_coordinate*v->y_coordinate + v->z_coordinate*v->z_coordinate);
+	return sqrtf(v->x_coordinate*v->x_coordinate + v->y_coordinate*v->y_coordinate + v->z_coordinate*v->z_coordinate);
 
 }
 
