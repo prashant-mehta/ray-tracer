@@ -12,9 +12,9 @@ WritePpm::WritePpm(const char *filename, int32_t uSize, int32_t vSize, const vec
 
 	outputfile.open(filename);
 
-	ofstream writet;
+//	ofstream writet;
 
-	writet.open("tValues.txt");
+//	writet.open("tValues.txt");
 
 	outputfile << "P3\n";
 	outputfile << uSize ;
@@ -40,20 +40,11 @@ WritePpm::WritePpm(const char *filename, int32_t uSize, int32_t vSize, const vec
 			outputfile << " ";
 			outputfile << pixel_colors.at(i*uSize + j).GetB();
 			outputfile << "\n";
-
-			if (j >= 135 && j <= 175 && i >= 28 && i <= 69) {
-
-			writet << pixel_colors.at(i*uSize + j).closest_polygon;
-			writet << " ";
-
-			}
 		}
-		writet << "\n";
-
-
+	//	writet << "\n";
 	}
 
 	outputfile.close();
-	writet.close();
+//	writet.close();
 }
 

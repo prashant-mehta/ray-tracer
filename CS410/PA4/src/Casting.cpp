@@ -95,24 +95,24 @@ Casting::Casting(int argc, char **argv) {
 
 			for (int i = 0; i < anti_aliasing_pixels; i++) {
 
-			rV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).rValue;
-			gV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).gValue;
-			bV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).bValue;
+				rV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).rValue;
+				gV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).gValue;
+				bV = pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).bValue;
 
-			// To make sure colors are not greater than 1 or less than 0
-			rV = std::min(rV, (float) 1.0);
-			gV = std::min(gV, (float) 1.0);
-			bV = std::min(bV, (float) 1.0);
+				// To make sure colors are not greater than 1 or less than 0
+				rV = std::min(rV, (float) 1.0);
+				gV = std::min(gV, (float) 1.0);
+				bV = std::min(bV, (float) 1.0);
 
-			rV = std::max(rV, (float) 0.0);
-			gV = std::max(gV, (float) 0.0);
-			bV = std::max(bV, (float) 0.0);
+				rV = std::max(rV, (float) 0.0);
+				gV = std::max(gV, (float) 0.0);
+				bV = std::max(bV, (float) 0.0);
 
-			float minV = std::min(rV, std::min(gV, bV));
-			float maxV = std::max(rV, std::max(gV, bV));
+				float minV = std::min(rV, std::min(gV, bV));
+				float maxV = std::max(rV, std::max(gV, bV));
 
-			min_color = min(minV, min_color);
-			max_color = max(maxV, max_color);
+				min_color = min(minV, min_color);
+				max_color = max(maxV, max_color);
 
 			}
 		}
@@ -124,7 +124,7 @@ Casting::Casting(int argc, char **argv) {
 		for (int b = uMin; b <= uMax; b++) {
 
 			for (int i = 0; i < anti_aliasing_pixels; i++) {
-			pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).SetScaledPixels(max_color, min_color);
+				pixel_colors[i].at((a - vMin) * uSize + (b - uMin)).SetScaledPixels(max_color, min_color);
 
 			}
 		}
@@ -343,11 +343,9 @@ void Casting::CastingForModel(void) {
 
 					// Only if this is true then go for checking if the ray intersects each face
 
-					number_of_recursive_calls = 0;
-
 					RayPolygonToFP = this->vector_operations->GetVector(ZeroVertex, U);
 
-					Reflection(L, *RayPolygonToFP, &current_pixel);
+					Reflection(L, *RayPolygonToFP, &current_pixel, 0);
 
 					pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).rValue = current_pixel.rValue;
 					pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).gValue = current_pixel.gValue;
@@ -421,7 +419,7 @@ void Casting::FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current
 
 		if (((solution[0] > -EPSILON) && (solution[1] > -EPSILON) && (solution[0] + solution[1] - 1 < EPSILON )
 				&& (t > EPSILON)) && (t - current_pixel->distance_closest_intersection < EPSILON) ) {
-/*
+			/*
 			if (current_triangle == 719) {
 				cout << "Solution 0 " << solution[0] << endl;
 				cout << "Solution 1 " << solution[1] << endl;
@@ -429,7 +427,7 @@ void Casting::FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current
 				cout << "t " << t << endl;
 
 			}
-*/
+			 */
 			// t < all other intersections
 
 
@@ -446,7 +444,7 @@ void Casting::FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current
 }
 
 
-void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) {
+void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel, int32_t recursion_level) {
 
 	// Base cases for recursion
 
@@ -478,14 +476,14 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 	A = all_triangles.at(kmin).getVertexFromFace(0);
 	B = all_triangles.at(kmin).getVertexFromFace(1);
 	C = all_triangles.at(kmin).getVertexFromFace(2);
-
-
+	/*
+cout << "test1" << endl;
 	// Calculate pixel color from ambient light source
 	AmbientReflection(all_triangles.at(kmin).getDiffuseReflectance(),
 			this->parse_materials->light_sources.at(this->parse_materials->ambient_light_source_index), current_pixel);
+	cout << "test2" << endl;
 
-
-
+	 */
 	// Compute Point of intersection using t
 	PointOfIntersection = ComputePointOfIntersection(L, tmin, *RayFPToPolygon);
 
@@ -562,6 +560,10 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 			delete ReflectedRay;
 
 		}
+		else {
+			AmbientReflection(all_triangles.at(kmin).getDiffuseReflectance(),
+					this->parse_materials->light_sources.at(this->parse_materials->ambient_light_source_index), current_pixel);
+		}
 
 	}
 
@@ -607,12 +609,12 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 		if (recursive_color.closest_polygon != UINT64_MAX && recursive_color.distance_closest_intersection != FLT_MAX) {
 
 			//cout << "RvdotSurfaceNormal " << this->vector_operations->DotProduct(InvRv, SurfaceNormal)<< endl;
-		//	if (kmin == 88)
+			//	if (kmin == 88)
 			//cout << "kmin is " << kmin << " closest polygon to it " << recursive_color.closest_polygon << endl;
 
-			number_of_recursive_calls++;
+			recursion_level++;
 
-			if (number_of_recursive_calls > 20){
+			if (recursion_level > 20){
 				delete Rv;
 				delete V;
 				delete InvRv;
@@ -642,7 +644,7 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 			all_triangles.at(recursive_color.closest_polygon).getVertexFromFace(2).PrintVertex();
 						}
 
-*/
+			 */
 
 
 
@@ -651,9 +653,9 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 			cout << "normal ";
 			SurfaceNormal->PrintVertex();
 
-*/
+			 */
 			//cout << "closest polygon" << recursive_color.closest_polygon << endl;
-			Reflection(*PointOfIntersection, *InvRv, &recursive_color);
+			Reflection(*PointOfIntersection, *InvRv, &recursive_color, recursion_level);
 
 			current_pixel->rValue += recursive_color.rValue*ks;
 			current_pixel->gValue += recursive_color.gValue*ks;
@@ -667,6 +669,64 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel) 
 
 	}
 
+
+	/*******
+	 * For translucency
+	 *
+	 */
+
+	float kt = all_triangles.at(kmin).getTranslucency();
+
+
+	if ((kt*current_pixel->rValue > 0.002 || kt*current_pixel->gValue > 0.002 || kt*current_pixel->bValue > 0.002)) {
+
+		uint64_t start_triangle, last_triangle;
+
+		start_triangle = 0;
+		last_triangle = 0;
+
+		Pixel translucency_color;
+		translucency_color.closest_polygon = UINT64_MAX;
+		translucency_color.distance_closest_intersection = FLT_MAX;
+
+		// Consider ray from FP to Polygon and find the next closest polygon to it from another model
+		for (int model_index = 0; model_index < this->number_of_models;	model_index++) {
+
+			if (model_index != 0) {
+				start_triangle += num_triangles_in_model.at(model_index-1);
+			}
+			last_triangle += num_triangles_in_model.at(model_index);
+
+			if (kmin >= start_triangle && kmin < last_triangle) {
+				// If current triangle is in same model move to next model
+				continue;
+			}
+
+			FindClosestPolygon(*PointOfIntersection, RayPolygonToFP, &translucency_color, start_triangle, last_triangle, UINT64_MAX);
+
+		}
+
+
+		if (translucency_color.closest_polygon != UINT64_MAX && translucency_color.distance_closest_intersection != FLT_MAX) {
+
+			recursion_level++;
+
+			if (recursion_level > 20){
+				delete SurfaceNormal;
+				delete PointOfIntersection;
+				return;
+
+			}
+
+			Reflection(*PointOfIntersection, RayPolygonToFP, &translucency_color, recursion_level);
+
+			current_pixel->rValue += translucency_color.rValue*kt;
+			current_pixel->gValue += translucency_color.gValue*kt;
+			current_pixel->bValue += translucency_color.bValue*kt;
+
+		}
+
+	}
 
 
 	delete SurfaceNormal;
@@ -736,9 +796,6 @@ void Casting::MergeTrianglesFromModels(void) {
 				triangles, model_index);
 		if (model_index == 0) {
 			all_triangles = triangles;
-
-
-
 		}
 		else {
 			all_triangles.insert(all_triangles.end(), triangles.begin(),

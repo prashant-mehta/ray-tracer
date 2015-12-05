@@ -59,7 +59,6 @@ private:
 	Vertex * look_at_point;
 	int32_t uMin, uMax, vMin, vMax;
 	int32_t uSize, vSize;
-	uint32_t number_of_recursive_calls;
 
 	// Object characteristics
 	Vertex mean_vertex;
@@ -119,7 +118,7 @@ public:
 
 	void FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel, uint64_t start_triangle, uint64_t last_triangle, uint64_t current_triangle);
 
-	void Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel);
+	void Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel, int32_t recursion_level);
 
 	bool RaySphereIntersection(Vertex *L);
 };
