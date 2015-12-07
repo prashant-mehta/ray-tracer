@@ -93,24 +93,24 @@ Casting::Casting(int argc, char **argv) {
 	for (int a = vMin; a <= vMax; a++) {
 		for (int b = uMin; b <= uMax; b++) {
 
-				rV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).rValue;
-				gV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).gValue;
-				bV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).bValue;
+			rV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).rValue;
+			gV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).gValue;
+			bV = pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).bValue;
 
-				// To make sure colors are not greater than 1 or less than 0
-				rV = std::min(rV, (float) 1.0);
-				gV = std::min(gV, (float) 1.0);
-				bV = std::min(bV, (float) 1.0);
+			// To make sure colors are not greater than 1 or less than 0
+			rV = std::min(rV, (float) 1.0);
+			gV = std::min(gV, (float) 1.0);
+			bV = std::min(bV, (float) 1.0);
 
-				rV = std::max(rV, (float) 0.0);
-				gV = std::max(gV, (float) 0.0);
-				bV = std::max(bV, (float) 0.0);
+			rV = std::max(rV, (float) 0.0);
+			gV = std::max(gV, (float) 0.0);
+			bV = std::max(bV, (float) 0.0);
 
-				float minV = std::min(rV, std::min(gV, bV));
-				float maxV = std::max(rV, std::max(gV, bV));
+			float minV = std::min(rV, std::min(gV, bV));
+			float maxV = std::max(rV, std::max(gV, bV));
 
-				min_color = min(minV, min_color);
-				max_color = max(maxV, max_color);
+			min_color = min(minV, min_color);
+			max_color = max(maxV, max_color);
 
 		}
 	}
@@ -123,7 +123,7 @@ Casting::Casting(int argc, char **argv) {
 	for (int a = vMin; a <= vMax; a++) {
 		for (int b = uMin; b <= uMax; b++) {
 
-				pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).SetScaledPixels(max_color, min_color);
+			pixel_colors[0].at((a - vMin) * uSize + (b - uMin)).SetScaledPixels(max_color, min_color);
 
 
 		}
@@ -209,9 +209,9 @@ void Casting::CastingForModel(void) {
 
 		// For every pixel calculate closest polygons from pixel
 
-#pragma omp parallel
+		//#pragma omp parallel
 		for (int a = vMin; a <= vMax; a++) {
-#pragma omp for schedule(dynamic,1)
+			//#pragma omp for schedule(dynamic,1)
 			for (int b = uMin; b <= uMax; b++) {
 
 				float random_scale;
@@ -301,9 +301,9 @@ void Casting::CastingForModel(void) {
 
 
 
-#pragma omp parallel
+	#pragma omp parallel for schedule(dynamic,1)
 	for (int a = vMin; a <= vMax; a++) {
-#pragma omp for schedule(dynamic,1)
+		//#pragma omp for schedule(dynamic,1)
 		for (int b = uMin; b <= uMax; b++) {
 
 
@@ -433,13 +433,10 @@ void Casting::FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current
 				&& (t > 0.001)) && (t - current_pixel->distance_closest_intersection < EPSILON) ) {
 /*
 			if (k == 599) {
-
-
 				cout << "Solution 0 " << solution[0] << endl;
 				cout << "Solution 1 " << solution[1] << endl;
 				cout << "Solution 0+1 " << solution[0]+solution[1] << endl;
 				cout << "t " << t << endl;
-
 			}
 */
 			// t < all other intersections
@@ -456,6 +453,7 @@ void Casting::FindClosestPolygon(Vertex L, Vertex RayPolygonToFP, Pixel *current
 	delete RayFPToPolygon;
 
 }
+
 
 
 void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel, int32_t recursion_level) {
@@ -501,22 +499,22 @@ cout << "test1" << endl;
 	// Compute Point of intersection using t
 	PointOfIntersection = ComputePointOfIntersection(L, tmin, *RayFPToPolygon);
 
-/*
+	/*
 
 	if (kmin == 571 && recursion_level == 1) {
 		cout << "POI for kmin - 571 is " ;
 		PointOfIntersection->PrintVertex();
 	}
 
-*/
+	 */
 	SurfaceNormal = ComputeSurfaceNormal(A, B, C,&RayPolygonToFP);
 
-/*
+	/*
 	if (kmin == 599) {
 		cout << "NdotL" << this->vector_operations->DotProduct(&RayPolygonToFP, SurfaceNormal) << endl;
 
 	}
-*/
+	 */
 	// Calculate color -- Main part of ray casting
 	// For each source of light (except ambient source)
 	for (int curr_light = 0; curr_light	< this->parse_materials->light_sources.size(); curr_light++) {
@@ -652,7 +650,7 @@ cout << "test1" << endl;
 
 			}
 
-		/*				if (kmin == 539 | kmin == 599){
+			/*				if (kmin == 539 | kmin == 599){
 			cout << "VdotN " << VdotN << endl;
 
 			cout << "POI of polygon - " << kmin;
@@ -672,7 +670,7 @@ cout << "test1" << endl;
 			all_triangles.at(recursive_color.closest_polygon).getVertexFromFace(2).PrintVertex();
 						}
 
-*/
+			 */
 
 
 
