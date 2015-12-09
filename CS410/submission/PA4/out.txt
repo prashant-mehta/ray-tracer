@@ -1,0 +1,4 @@
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 199
+Done! Exiting code.
