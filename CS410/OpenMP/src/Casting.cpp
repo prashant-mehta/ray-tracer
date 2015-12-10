@@ -181,6 +181,23 @@ void Casting::CastingForModel(void) {
 	// For all models
 
 
+#pragma omp parallel for
+	for (int a = vMin; a <= vMax; a++) {
+		for (int b = uMin; b <= uMax; b++) {
+
+			float random_scale;
+
+			random_scale = rand(generator);
+
+
+			for (int p = 0; p < anti_aliasing_pixels; p++) {
+
+					pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).random_scaleU = random_scale*scale_factorsU[p];
+					pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).random_scaleV = random_scale*scale_factorsV[p];
+			}
+		}
+	}
+
 
 
 	for (int model_index = 0; model_index < this->number_of_models;	model_index++) {
@@ -209,14 +226,10 @@ void Casting::CastingForModel(void) {
 
 		// For every pixel calculate closest polygons from pixel
 
-		//#pragma omp parallel
+#pragma omp parallel for schedule(dynamic,50)
 		for (int a = vMin; a <= vMax; a++) {
-			//#pragma omp for schedule(dynamic,1)
+		//	#pragma omp parallel for schedule(dynamic,1)
 			for (int b = uMin; b <= uMax; b++) {
-
-				float random_scale;
-
-				random_scale = rand(generator);
 
 
 				for (int p = 0; p < anti_aliasing_pixels; p++) {
@@ -226,12 +239,6 @@ void Casting::CastingForModel(void) {
 					Vertex L;
 					Vertex *RayPolygonToFP, *RayFPToPolygon;
 
-
-					if (model_index == 0) {
-						// Storing random scales for use later
-						pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).random_scaleU = random_scale*scale_factorsU[p];
-						pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).random_scaleV = random_scale*scale_factorsV[p];
-					}
 					scaleU = pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).random_scaleU;
 					scaleV = pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).random_scaleV;
 
@@ -301,13 +308,10 @@ void Casting::CastingForModel(void) {
 
 
 
-	#pragma omp parallel for schedule(dynamic,1)
+	#pragma omp parallel for schedule(dynamic,50)
 	for (int a = vMin; a <= vMax; a++) {
-		//#pragma omp for schedule(dynamic,1)
+	//	#pragma omp parallel for schedule(dynamic,1)
 		for (int b = uMin; b <= uMax; b++) {
-
-
-
 
 
 			for (int p = 0; p < anti_aliasing_pixels; p++) {
@@ -335,7 +339,7 @@ void Casting::CastingForModel(void) {
 
 
 				// Check if ray from pixel intersects with the sphere bounding the object
-				bool intersectsSphere = RaySphereIntersection(&L, &RayFPToPolygon, 0, 0);
+				ComputeRayFPToPolygon(&L, &RayFPToPolygon);
 
 				current_pixel.distance_closest_intersection = pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).distance_closest_intersection;
 				current_pixel.closest_polygon = pixel_colors[p].at((a - vMin) * uSize + (b - uMin)).closest_polygon;
@@ -907,6 +911,29 @@ bool Casting::RaySphereIntersection(Vertex *L, Vertex **RayFPToPolygon, float ra
 	}
 	return false;
 
+}
+
+void Casting::ComputeRayFPToPolygon(Vertex *L, Vertex **RayFPToPolygon) {
+
+	Vertex LminusE, OminusE;
+
+	float v, vSquare;
+
+	float s, d, dSquare;
+
+	// Calculate U - Normalized (L - fp)
+	LminusE.x_coordinate = L->x_coordinate
+			- this->focal_point->x_coordinate;
+	LminusE.y_coordinate = L->y_coordinate
+			- this->focal_point->y_coordinate;
+	LminusE.z_coordinate = L->z_coordinate
+			- this->focal_point->z_coordinate;
+
+	// U = this->vector_operations->Normalize(&LminusE);
+
+	// U - Vector from fp to pixel
+	*RayFPToPolygon = this->vector_operations->GetNormalizedVector(L,
+			this->focal_point);
 }
 
 bool Casting::RayTriangleIntersection(Face triangle, Vertex ray, Vertex point, float distance) {

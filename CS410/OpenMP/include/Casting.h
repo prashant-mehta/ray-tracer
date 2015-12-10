@@ -119,6 +119,7 @@ public:
 	void Reflection(Vertex L, Vertex RayPolygonToFP, Pixel *current_pixel, int32_t recursion_level);
 
 	bool RaySphereIntersection(Vertex *L, Vertex **RayFPToPolygon, float radiusSquare, float cSquare);
+	void ComputeRayFPToPolygon(Vertex *L, Vertex **RayFPToPolygon);
 };
 
 #endif /* INCLUDE_SILHOUETTE_H_ */
