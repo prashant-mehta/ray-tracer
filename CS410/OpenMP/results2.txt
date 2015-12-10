@@ -1,0 +1,54 @@
+for i in `seq 1 8`;
+do
+export OMP_NUM_THREADS=$i;
+time ./Debug/OpenMP ../camera/spheres_better_camera.txt ../material/red_sphere_material.txt ../ply/sphere.ply output/red_spheres_output.ppm
+done
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 28
+Done! Exiting code.
+28.87user 0.08system 0:28.95elapsed 100%CPU (0avgtext+0avgdata 945392maxresident)k
+0inputs+47104outputs (0major+4932minor)pagefaults 0swaps
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 36
+Done! Exiting code.
+71.91user 0.10system 0:36.57elapsed 196%CPU (0avgtext+0avgdata 945424maxresident)k
+0inputs+47104outputs (0major+4941minor)pagefaults 0swaps
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 30
+Done! Exiting code.
+87.01user 0.09system 0:30.37elapsed 286%CPU (0avgtext+0avgdata 945444maxresident)k
+0inputs+47104outputs (0major+4950minor)pagefaults 0swaps
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 28
+Done! Exiting code.
+90.65user 0.11system 0:28.55elapsed 317%CPU (0avgtext+0avgdata 945460maxresident)k
+0inputs+47104outputs (0major+4956minor)pagefaults 0swaps
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 20
+Done! Exiting code.
+79.28user 0.09system 0:20.69elapsed 383%CPU (0avgtext+0avgdata 945472maxresident)k
+0inputs+47104outputs (0major+4960minor)pagefaults 0swaps
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 22
+Done! Exiting code.
+84.93user 0.12system 0:22.64elapsed 375%CPU (0avgtext+0avgdata 945784maxresident)k
+0inputs+47104outputs (0major+4534minor)pagefaults 0swaps
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 16
+Done! Exiting code.
+65.71user 0.13system 0:16.31elapsed 403%CPU (0avgtext+0avgdata 945796maxresident)k
+0inputs+47104outputs (0major+5045minor)pagefaults 0swaps
+Calculated closest polygons. Now starting reflection.
+Writing output ppm file
+Execution time - 20
+Done! Exiting code.
+74.81user 0.10system 0:20.85elapsed 359%CPU (0avgtext+0avgdata 945804maxresident)k
+0inputs+47104outputs (0major+5055minor)pagefaults 0swaps
+
