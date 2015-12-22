@@ -408,10 +408,11 @@ void Casting::Reflection(Vertex L, Vertex RayPolygonToFP, int model_index, Pixel
 
 							DiffuseReflection(all_triangles.at(k).getDiffuseReflectance(), this->parse_materials->light_sources.at(curr_light), NdotL, current_pixel);
 
+							if (VdotR < -EPSILON) {
 							SpecularReflection(all_triangles.at(k).getSpecularReflectance(), all_triangles.at(k).getShininessExponent(),
 									this->parse_materials->light_sources.at(curr_light), VdotR, current_pixel);
 
-
+							}
 
 						}
 						delete LightRay;

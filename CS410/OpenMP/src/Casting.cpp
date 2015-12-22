@@ -119,7 +119,7 @@ Casting::Casting(int argc, char **argv) {
 
 	// Scale all pixels to min and max before writing out
 	// For every pixel
-#pragma omp parallel for
+#pragma omp parallel for collapse(2)
 	for (int a = vMin; a <= vMax; a++) {
 		for (int b = uMin; b <= uMax; b++) {
 
@@ -181,7 +181,7 @@ void Casting::CastingForModel(void) {
 	// For all models
 
 
-#pragma omp parallel for
+#pragma omp parallel for collapse(2)
 	for (int a = vMin; a <= vMax; a++) {
 		for (int b = uMin; b <= uMax; b++) {
 
@@ -378,7 +378,7 @@ void Casting::CastingForModel(void) {
 	}
 
 
-#pragma omp parallel for
+#pragma omp parallel for collapse(2)
 	for (int a = vMin; a <= vMax; a++) {
 		for (int b = uMin; b <= uMax; b++) {
 

@@ -1,10 +1,10 @@
 ply
 format ascii 1.0
 comment VCGLIB generated
-element vertex 16641
+element vertex 1089
 property float x
 property float y
 property float z
-element face 32768
+element face 2048
 property list uchar int vertex_indices
 end_header
